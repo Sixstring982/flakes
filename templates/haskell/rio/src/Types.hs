@@ -1,26 +1,33 @@
-{-# LANGUAGE NoImplicitPrelude #-}
+-- | Project-wide type definitions.
+-- |
+-- | Note that this is re-expored from `Import`, so these types should truly be
+-- | considered project-wide.
 module Types
-  ( App (..)
-  , Options (..)
-  ) where
+  ( App (..),
+    Options (..),
+  )
+where
 
 import RIO
 import RIO.Process
 
--- | Command line arguments
-data Options = Options
-  { optionsVerbose :: !Bool
-  }
-
+-- | App-wide context for this app.
+-- | This is usually used as the `RIO` reader parameter for this app.
 data App = App
-  { appLogFunc :: !LogFunc
-  , appProcessContext :: !ProcessContext
-  , appOptions :: !Options
-  -- Add other app-specific configuration information here
+  { appOptions :: !Options,
+    appLogFunc :: !LogFunc,
+    appProcessContext :: !ProcessContext
   }
 
 instance HasLogFunc App where
-  logFuncL = lens appLogFunc (\x y -> x { appLogFunc = y })
-instance HasProcessContext App where
-  processContextL = lens appProcessContext (\x y -> x { appProcessContext = y })
+  logFuncL = lens appLogFunc (\x y -> x {appLogFunc = y})
 
+-- | Options for running this app via its main entrypoint.
+data Options = Options
+  { -- | If `True`, log messages will be more verbose.
+    optionsVerbose :: !Bool,
+    -- | Some integer option.
+    optionsInt :: !Int,
+    -- | Some float option, if specified.
+    optionsFloat :: !(Maybe Float)
+  }
