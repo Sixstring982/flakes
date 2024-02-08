@@ -6,16 +6,21 @@
   outputs = { self, nixpkgs }:
     {
       templates = {
+        haskell-rio = {
+          description =
+            "Haskell project template using the RIO library";
+          path = ./templates/haskell/rio;
+        };
+
         ocaml-dune-project = {
           description =
             "Simple OCaml dune project template";
           path = ./templates/ocaml/dune-project;
         };
 
-        haskell-rio = {
-          description =
-            "Haskell project template using the RIO library";
-          path = ./templates/haskell/rio;
+        typescript-bun = {
+          description = "Simple bun environment";
+          path = ./templates/typescript/bun;
         };
       };
     };
